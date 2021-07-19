@@ -33,32 +33,36 @@ func (a *Alert) Watch(firstTicker ticker.Ticker, ticker ticker.Ticker) (alarmTic
 	percBid := firstTicker.Bid * a.Perc
 	percAsk := firstTicker.Ask * a.Perc
 
-	if (oscilationBid > percBid) || (oscilationAsk > percAsk) {
+	direction := UP
+	if oscilationBid < 0 {
+		oscilationBid = oscilationBid * -1
+		direction = DOWN
+	}
+
+	if oscilationAsk < 0 {
+		oscilationAsk = oscilationAsk * -1
+		direction = DOWN
+	}
+
+	if (oscilationBid >= percBid) || (oscilationAsk >= percAsk) {
 		var oscilation float64
 		switch {
-			case oscilationBid > percBid:
+			case oscilationBid >= percBid:
 				oscilation = oscilationBid
-			case oscilationAsk > percAsk:
+			case oscilationAsk >= percAsk:
 				oscilation = oscilationAsk
 			default:
 				oscilation = 0.0
 		}
 		
-		direction := UP
-		if oscilation < 0 {
-			direction = DOWN
-			oscilation = oscilation * -1.0
+		a.Warning = Alarm{
+			Ticker:     ticker,
+			Oscilation: oscilation,
+			CreatedAt:  time.Now(),
+			Direction:  direction,
 		}
-
-		if oscilation >= a.Perc {
-			a.Warning = Alarm{
-				Ticker:     ticker,
-				Oscilation: oscilation,
-				CreatedAt:  time.Now(),
-				Direction:  direction,
-			}
-			return true
-		}		
+		return true
+		
 	}
 
 	return false
