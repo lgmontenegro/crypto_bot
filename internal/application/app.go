@@ -29,7 +29,7 @@ func (a *Application) Bootstrap(config config.Config) {
 		pairSet.crawler = &c
 		pairSet.pair = pair
 
-		a.pairsCrawlers = append(a.pairsCrawlers, pairSet)		
+		a.pairsCrawlers = append(a.pairsCrawlers, pairSet)
 	}
 
 	alertsCfg := alert.Alerts{}
@@ -47,12 +47,14 @@ func (a *Application) Bootstrap(config config.Config) {
 	}
 }
 
-func (a *Application) Start() {
+func (a *Application) Start(verbose bool) {
 	runtime.GOMAXPROCS(len(a.pairsCrawlers))
 	var wg sync.WaitGroup
 	wg.Add(len(a.pairsCrawlers))
+
 	for _, pairSet := range a.pairsCrawlers {
-		go a.dataProcessor.Process(pairSet.crawler, pairSet.pair, wg)
+		go a.dataProcessor.Process(pairSet.crawler, pairSet.pair, wg, verbose)
 	}
+
 	wg.Wait()
 }

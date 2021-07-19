@@ -27,22 +27,38 @@ type Alarm struct {
 }
 
 func (a *Alert) Watch(firstTicker ticker.Ticker, ticker ticker.Ticker) (alarmTicker bool) {
-	oscilation := ticker.Bid - firstTicker.Bid
+	oscilationBid := ticker.Bid - firstTicker.Bid
+	oscilationAsk := ticker.Ask - firstTicker.Ask
 
-	direction := UP
-	if oscilation < 0 {
-		direction = DOWN
-		oscilation = oscilation * -1.0
-	}
+	percBid := firstTicker.Bid * a.Perc
+	percAsk := firstTicker.Ask * a.Perc
 
-	if oscilation >= a.Perc {
-		a.Warning = Alarm{
-			Ticker:     ticker,
-			Oscilation: oscilation,
-			CreatedAt:  time.Now(),
-			Direction:  direction,
+	if (oscilationBid > percBid) || (oscilationAsk > percAsk) {
+		var oscilation float64
+		switch {
+			case oscilationBid > percBid:
+				oscilation = oscilationBid
+			case oscilationAsk > percAsk:
+				oscilation = oscilationAsk
+			default:
+				oscilation = 0.0
 		}
-		return true
+		
+		direction := UP
+		if oscilation < 0 {
+			direction = DOWN
+			oscilation = oscilation * -1.0
+		}
+
+		if oscilation >= a.Perc {
+			a.Warning = Alarm{
+				Ticker:     ticker,
+				Oscilation: oscilation,
+				CreatedAt:  time.Now(),
+				Direction:  direction,
+			}
+			return true
+		}		
 	}
 
 	return false
