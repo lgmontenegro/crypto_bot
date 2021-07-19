@@ -18,17 +18,22 @@ With your Git client installed and configured, you must clone the repository lik
 
 >git clone https://github.com/lgmontenegro/crypto_bot.git crypto_bot
 
-After you have cloned the repository, you will change to the cloned repository directory and install the code dependencies as below:
+The command above will create a folder called crypto_bot and will copy all repository code into it.
 
->cd cripto_bot go build.
+After you have cloned the repository, you will change to the cloned repository folder and install the code dependencies as below:
 
-These commands will probably generate a file called crypto_bot (in Linux or Mac) or cripto_bot.exe (in Windows). You can move this single file to any directory you wish.
+>cd cripto_bot 
+>go build .
+
+These commands will probably generate a file called crypto_bot (in Linux or Mac) or cripto_bot.exe (in Windows) into the repository folder. You can move this single file to any directory you wish.
 
 ### Configuring Crypto Bot
 
 Crypto Bot can be configured with a JSON file or with a flag configuration at the command line.
 
 #### JSON Configuration File
+
+The configuration file has to be in the same folder where the crypto_bot file will be executed
 
 The JSON configuration file has 5 entries as described below:
 
@@ -57,6 +62,8 @@ Here is an example of how a JSON configuration file looks like:
 }
 ```
 
+You can find an functional example inside the repository folder and edit it.
+
 Another way is setting these entries via command line with flags. Running `crypto_bot -h` at your command line you will see this:
 
 ```
@@ -74,6 +81,8 @@ Flags:
   -v, --verbose             verbose output
 With the flags below, you can skip these entries into the JSON configuration files.
 ```
+
+You can also use both. In this case, the command line flags with subscribe the JSON configuration file entries.
 
 #### The Alerts
 
