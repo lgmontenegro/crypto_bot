@@ -62,7 +62,7 @@ Here is an example of how a JSON configuration file looks like:
 }
 ```
 
-You can find an functional example inside the repository folder and edit it.
+You can find a functional example inside the repository folder and edit it.
 
 Another way is setting these entries via command line with flags. Running `crypto_bot -h` at your command line you will see this:
 
@@ -82,7 +82,7 @@ Flags:
 With the flags below, you can skip these entries into the JSON configuration files.
 ```
 
-You can also use both. In this case, the command line flags with subscribe the JSON configuration file entries.
+You can also use both. In this case, the command line flags will subscribe to the JSON configuration file entries.
 
 #### The Alerts
 
