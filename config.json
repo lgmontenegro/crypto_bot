@@ -1,0 +1,12 @@
+{
+    "times": 5,
+    "url": "https://api.uphold.com/",
+    "endpoint": "v0/ticker/",
+    "pairs": ["USD-ADA", "USD-BTC"],        
+    "alerts": [
+        {
+            "pair": "ADA-USD",
+            "float": 0.01
+        }
+    ]
+}
