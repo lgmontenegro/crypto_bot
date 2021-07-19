@@ -19,7 +19,7 @@ type Data interface {
 	DataRetriever() (body []byte, err error)
 }
 
-func (d *DataProcessor) Process(exec Data, pair string, wg sync.WaitGroup) (err error) {
+func (d *DataProcessor) Process(exec Data, pair string, wg sync.WaitGroup, verbose bool) (err error) {
 	defer wg.Done()
 
 	var setAlarm bool
@@ -56,7 +56,10 @@ func (d *DataProcessor) Process(exec Data, pair string, wg sync.WaitGroup) (err 
 			}
 		}
 
-		fmt.Println(string(body))
+		if verbose {
+			fmt.Printf("%s: bid - %f, ask - %f, osc: %f \n", pair, newTicker.Bid, newTicker.Ask, (newTicker.Ask - newTicker.Bid) - (firstTicker.Ask - firstTicker.Bid))
+		}
+
 	}
 
 	return nil
