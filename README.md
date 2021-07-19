@@ -2,16 +2,15 @@
 
 This bot gets a currency pair (cryptos currency and fiat currency) from Uphold open API (at https://api.uphold.com/v0/ticker/ [currency pair]) - more info here: https://uphold.com/en/developer/api/documentation/#tickers.
 
-You can be aware about your favorites currencies pairs by setting alerts to then.
-
+You can be aware of your favourites currencies pairs by setting alerts to them.
 
 ## How to install
 
 ### Pre-requisites
 
-* You must have Golang installed to compile it (more about how to install Golang at https://www.golang.org/doc/install);
-* You must have Git client installed to checkout this repository (more about how to install Git client at https://git-scm.com/);
-* You must have internet access.
+- You must have Golang installed to compile it (more about how to install Golang at https://www.golang.org/doc/install);
+- You must have Git client installed to check out this repository (more about how to install Git client at https://git-scm.com/);
+You must have internet access.
 
 ### How to install Crypto Bot
 
@@ -21,32 +20,29 @@ With your Git client installed and configured, you must clone the repository lik
 
 After you have cloned the repository, you will change to the cloned repository directory and install the code dependencies as below:
 
->cd cripto_bot
->go build .
+>cd cripto_bot go build.
 
-These commands will problably generate an file called crypto_bot (in Linux or Mac) or cripto_bot.exe (in Windows)
-
-You can move this single file to any directory you wish.
+These commands will probably generate a file called crypto_bot (in Linux or Mac) or cripto_bot.exe (in Windows). You can move this single file to any directory you wish.
 
 ### Configuring Crypto Bot
 
-Crypto Bot can be configured with a json file file or with flag configuration at command line.
+Crypto Bot can be configured with a JSON file or with a flag configuration at the command line.
 
-#### Json Configuration File
+#### JSON Configuration File
 
-The Json configuration file have 5 entries as described below:
+The JSON configuration file has 5 entries as described below:
 
-* times(integer): or frequency, or fetch interval, is the time in seconds between currency pair data fetch;
-* url(string): the resource locator where the API is hosted;
-* endpoint(string): the path to reach the API;
-* pairs(array of string): the pair, or pairs you want to fetch;
-* alerts (array of alert): the alerts you want for each configured pair.
+- times(integer): or frequency, or fetch interval, is the time in seconds between currency pair data fetch;
+- url(string): the resource locator where the API is hosted;
+- endpoint(string): the path to reach the API;
+- pairs(array of string): the pair, or pairs you want to fetch;
+- alerts (array of alerts): the alerts you want for each configured pair.
 
 We will discuss some more about alerts below.
 
-Here is an exemple of how a Json configuration file looks like:
+Here is an example of how a JSON configuration file looks like:
 
-```
+``` 
 {
     "times": 5,
     "url": "https://api.uphold.com/",
@@ -61,7 +57,7 @@ Here is an exemple of how a Json configuration file looks like:
 }
 ```
 
-Another way is setting these entries via command line with flags. Running ` crypto_bot -h ` at your command line you will see this:
+Another way is setting these entries via command line with flags. Running `crypto_bot -h` at your command line you will see this:
 
 ```
 A bot to watch crypto pair values
@@ -76,15 +72,14 @@ Flags:
   -p, --pairs strings       coins pairs
   -u, --url string          URL to access the endpoint
   -v, --verbose             verbose output
+With the flags below, you can skip these entries into the JSON configuration files.
 ```
-
-With the flags below, you can skip these entries into the Json configuration files.
 
 #### The Alerts
 
-Unfortunatly, Alerts can only be set at Json configuration file by now.
+Unfortunately, Alerts can only be set at JSON configuration file by now.
 
-Alerts are a array of Alert object:
+Alerts are an array of Alert objects:
 
 ```
 {
@@ -93,17 +88,17 @@ Alerts are a array of Alert object:
 }
 ```
 
-Where `pair` is one of the currency pair you choose to be fetched and `float` is the percentual difference between the first ticker fetched of this pair and the last one.
+Where `pair` is one of the currency pairs you choose to be fetched and `float` is the percentual difference between the first ticker fetched of this pair and the last one.
 
-If this difference is reached, the bot will alert, writting a message with some details as:
+If this difference is reached, the bot will alert, writing a message with some details as:
 
 ```
 {
-	Ticker: the ticker that generate the alert
-	Oscilation: the difference value
+	Ticker: the ticker that generates the alert
+	Oscillation: the difference value
 	CreatedAt: date and hour of the alarm
 	Direction: the sign of the difference (up or down)
 }
 ```
 
-Any issue fell free to contact me!
+Any issues feel free to contact me!
