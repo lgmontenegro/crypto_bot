@@ -64,7 +64,7 @@ func init() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	err = viper.BindPFlag("times", rootCmd.PersistentFlags().Lookup("times"))
+	err = viper.BindPFlag("interval", rootCmd.PersistentFlags().Lookup("interval"))
 	if err != nil{
 		fmt.Println(err)
 		os.Exit(1)
