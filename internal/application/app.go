@@ -6,6 +6,7 @@ import (
 	"lgmontenegro/crypto_bot/internal/application/crawler"
 	"lgmontenegro/crypto_bot/internal/application/data_processor"
 	"lgmontenegro/crypto_bot/internal/config"
+	"log"
 	"runtime"
 	"sync"
 	"time"
@@ -47,14 +48,22 @@ func (a *Application) Bootstrap(config config.Config) {
 	}
 }
 
-func (a *Application) Start(verbose bool) {
+func (a *Application) Start(verbose bool) (err error) {
 	runtime.GOMAXPROCS(len(a.pairsCrawlers))
 	var wg sync.WaitGroup
 	wg.Add(len(a.pairsCrawlers))
 
 	for _, pairSet := range a.pairsCrawlers {
-		go a.dataProcessor.Process(pairSet.crawler, pairSet.pair, wg, verbose)
-	}
+		go func(exec data_processor.Data, pair string, wg *sync.WaitGroup, verbose bool) {
+			err := a.dataProcessor.Process(exec, pair, wg, verbose)
+			if err != nil {
+				log.Fatal(err)
+			}
 
+		}(pairSet.crawler, pairSet.pair, &wg, verbose)
+
+	}
 	wg.Wait()
+
+	return err
 }

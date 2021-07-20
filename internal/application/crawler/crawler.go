@@ -19,7 +19,11 @@ func (c *Crawler) get() (err error) {
 	}
 	defer resp.Body.Close()
 
-	c.responseBody(resp)
+	err = c.responseBody(resp)
+	if err != nil {
+		log.Fatal("Error getting response. ", err)
+		return err
+	}
 	return nil
 }
 

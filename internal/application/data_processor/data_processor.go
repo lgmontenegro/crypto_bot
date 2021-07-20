@@ -19,14 +19,14 @@ type Data interface {
 	DataRetriever() (body []byte, err error)
 }
 
-func (d *DataProcessor) Process(exec Data, pair string, wg sync.WaitGroup, verbose bool) (err error) {
+func (d *DataProcessor) Process(exec Data, pair string, wg *sync.WaitGroup, verbose bool) (err error) {
 	defer wg.Done()
 
 	var setAlarm bool
 	firstTicker := ticker_info.Ticker{}
 	firstTickerLoop := true
 
-	for t := range time.Tick(d.Times) {
+	for {
 		body, err := exec.DataRetriever()
 		if err != nil {
 			log.Fatal(err)
@@ -39,7 +39,7 @@ func (d *DataProcessor) Process(exec Data, pair string, wg sync.WaitGroup, verbo
 			log.Fatal(err)
 			return err
 		}
-		newTicker.CreatedAt = t
+		newTicker.CreatedAt = time.Now()
 
 		if firstTickerLoop {
 			firstTicker = newTicker
@@ -59,8 +59,6 @@ func (d *DataProcessor) Process(exec Data, pair string, wg sync.WaitGroup, verbo
 		if verbose {
 			fmt.Printf("%s: bid - %f, ask - %f, osc: %f \n", pair, newTicker.Bid, newTicker.Ask, (newTicker.Ask - newTicker.Bid) - (firstTicker.Ask - firstTicker.Bid))
 		}
-
+		time.Sleep(d.Times)
 	}
-
-	return nil
 }

@@ -23,6 +23,7 @@ The command above will create a folder called crypto_bot and will copy all repos
 After you have cloned the repository, you will change to the cloned repository folder and install the code dependencies as below:
 
 >cd cripto_bot 
+
 >go build .
 
 These commands will probably generate a file called crypto_bot (in Linux or Mac) or cripto_bot.exe (in Windows) into the repository folder. You can move this single file to any directory you wish.
