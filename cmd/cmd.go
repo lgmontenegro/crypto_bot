@@ -34,7 +34,11 @@ var (
 			}
 
 			app.Bootstrap(cfg)
-			app.Start(Verbose)
+			err := app.Start(Verbose)
+			if err != nil{
+				fmt.Println(err)
+				os.Exit(1)
+			}
 		},
 	}
 )
@@ -55,10 +59,26 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&URL, "url", "u", cfg.URL, "URL to access the endpoint")
 	rootCmd.PersistentFlags().StringVarP(&EndPoint, "endpoint", "e", cfg.Endpoint, "EndPoint address for the ticker")
 	
-	viper.BindPFlag("pairs", rootCmd.PersistentFlags().Lookup("pairs"))
-	viper.BindPFlag("times", rootCmd.PersistentFlags().Lookup("times"))
-	viper.BindPFlag("url", rootCmd.PersistentFlags().Lookup("url"))
-	viper.BindPFlag("endpoint", rootCmd.PersistentFlags().Lookup("endpoint"))
+	err := viper.BindPFlag("pairs", rootCmd.PersistentFlags().Lookup("pairs"))
+	if err != nil{
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	err = viper.BindPFlag("times", rootCmd.PersistentFlags().Lookup("times"))
+	if err != nil{
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	err = viper.BindPFlag("url", rootCmd.PersistentFlags().Lookup("url"))
+	if err != nil{
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	err = viper.BindPFlag("endpoint", rootCmd.PersistentFlags().Lookup("endpoint"))
+	if err != nil{
+		fmt.Println(err)
+		os.Exit(1)
+	}
 }
 
 func initConfig() {

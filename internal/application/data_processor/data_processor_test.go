@@ -9,7 +9,7 @@ func TestDataProcessor_Process(t *testing.T) {
 	type args struct {
 		exec    Data
 		pair    string
-		wg      sync.WaitGroup
+		wg      *sync.WaitGroup
 		verbose bool
 	}
 	tests := []struct {
