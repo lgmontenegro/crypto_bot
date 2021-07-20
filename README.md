@@ -24,7 +24,11 @@ After you have cloned the repository, you will change to the cloned repository f
 
 >cd cripto_bot 
 
+>go mod vendor
+
 >go build .
+
+_PS: if you're using Linux, try run `make crypto_bot` after `cd cripto_bot`_
 
 These commands will probably generate a file called crypto_bot (in Linux or Mac) or cripto_bot.exe (in Windows) into the repository folder. You can move this single file to any directory you wish.
 
@@ -110,5 +114,18 @@ If this difference is reached, the bot will alert, writing a message with some d
 	Direction: the sign of the difference (up or down)
 }
 ```
+
+### Running the test
+
+To run the tests, run the following code:
+
+>go test -mod=vendor -tags=unit -failfast -coverprofile=test.cover ./...
+
+And to check the code lint, execute the following:
+
+>golangci-lint run --modules-download-mode vendor --timeout=30m
+
+_PS: if you are using Linux just run `make test`_
+
 
 Any issues feel free to contact me!
